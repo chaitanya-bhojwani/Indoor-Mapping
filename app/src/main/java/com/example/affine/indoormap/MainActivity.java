@@ -1,26 +1,31 @@
 package com.example.affine.indoormap;
 
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.GridLabelRenderer;
-import com.jjoe64.graphview.series.BarGraphSeries;
+import com.jjoe64.graphview.series.BaseSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
 import com.jjoe64.graphview.series.LineGraphSeries;
 import com.jjoe64.graphview.series.PointsGraphSeries;
+import com.jjoe64.graphview.series.Series;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<XYValue> xyValueArray;
     PointsGraphSeries<DataPoint> xySeries;
     LineGraphSeries<DataPoint> lineSeries;
+    List<Series> seriesList;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -29,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
-//        graph.getViewport().setScrollable(true);
-//        graph.getViewport().setScrollableY(true);
+        graph.getViewport().setScrollable(true);
+        graph.getViewport().setScrollableY(true);
 ////        graph.getViewport().setScalable(true);
 ////        graph.getViewport().setScalableY(true);
 
@@ -44,21 +49,43 @@ public class MainActivity extends AppCompatActivity {
         graph.getViewport().setMaxX(10);
         graph.getViewport().setMinX(-10);
 
-        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);// It will remove the background grids
-        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);// remove horizontal x labels and line
-        graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+//        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);// It will remove the background grids
+//        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);// remove horizontal x labels and line
+//        graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
 
-        makeParkingLot(graph);
-        showPath(graph);
+        makeParkingLot(graph,-7.5,-7.5,"Slot1");
+        makeParkingLot(graph,-7.5,-2.5,"Slot2");
+        makeParkingLot(graph,-7.5,2.5,"Slot3");
+        makeParkingLot(graph,-7.5,7.5,"Slot4");
+        makeParkingLot(graph,7.5,-7.5,"Slot5");
+        makeParkingLot(graph,7.5,-2.5,"Slot6");
+        makeParkingLot(graph,7.5,2.5,"Slot7");
+        makeParkingLot(graph,7.5,7.5,"Slot8");
+        makeParkingLot(graph,12.5,-7.5,"Slot9");
+        makeParkingLot(graph,12.5,-2.5,"Slot10");
+        makeParkingLot(graph,12.5,2.5,"Slot11");
+        makeParkingLot(graph,12.5,7.5,"Slot12");
+        makeParkingLot(graph,27.5,-7.5,"Slot13");
+        makeParkingLot(graph,27.5,-2.5,"Slot14");
+        makeParkingLot(graph,27.5,2.5,"Slot15");
+        makeParkingLot(graph,27.5,7.5,"Slot16");
+        showPath(graph,7.5,2.5,"path");
+        seriesList = graph.getSeries();
+        for(int i=0;i<seriesList.size();i++){
+            if(seriesList.get(i).getTitle().equals("Slot7")){
+                xySeries = (PointsGraphSeries<DataPoint>) seriesList.get(i);
+                xySeries.setColor(Color.BLUE);
+            }
+        }
 
     }
 
-    public void showPath(GraphView graph){
+    public void showPath(GraphView graph,double xp,double yp,String title){
         xyValueArray = new ArrayList<>();
         lineSeries = new LineGraphSeries<>();
-        xyValueArray.add(new XYValue(-2.5,-10));
-        xyValueArray.add(new XYValue(-2.5,2.5));
-        xyValueArray.add(new XYValue(2.5,2.5));
+        xyValueArray.add(new XYValue(0,-10));
+        xyValueArray.add(new XYValue(0,yp));
+        xyValueArray.add(new XYValue(xp,yp));
         xyValueArray = sortArray(xyValueArray);
         for(int i = 0;i <xyValueArray.size(); i++){
             try{
@@ -70,15 +97,16 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         lineSeries.setThickness(8);
+        lineSeries.setTitle(title);
         lineSeries.setAnimated(true);
         lineSeries.setColor(Color.RED);
         graph.addSeries(lineSeries);
     }
 
-    public void makeParkingLot(GraphView graph){
+    public void makeParkingLot(GraphView graph,double xp, double yp,String title){
         xyValueArray = new ArrayList<>();
         xySeries = new PointsGraphSeries<>();
-        xyValueArray.add(new XYValue(2.5,2.5));
+        xyValueArray.add(new XYValue(xp,yp));
         xyValueArray = sortArray(xyValueArray);
         for(int i = 0;i <xyValueArray.size(); i++){
             try{
@@ -99,7 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 canvas.drawRect(x-120f,y+180f,x+120f,y-180f,paint);
             }
         });
-        xySeries.setColor(Color.BLUE);
+        xySeries.setColor(Color.GRAY);
+        xySeries.setTitle(title);
         graph.addSeries(xySeries);
     }
 
@@ -150,5 +179,24 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return array;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_change_slot) {
+            Intent myIntent = new Intent(MainActivity.this, SelectSlotActivity.class);
+            MainActivity.this.startActivity(myIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

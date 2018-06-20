@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">IndoorMap</string>
+    <string name="change_slot">Change Slot</string>
 </resources>

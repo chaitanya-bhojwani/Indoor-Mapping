@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainParent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:id="@+id/scrollParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/items_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot2" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot3" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot4" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot5" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot6" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot7" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot8" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot9"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot9" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot10"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot10" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot11"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot11" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot12" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot13"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot13" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot14" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot15" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/Slot16"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="40dp"
+                    android:layout_weight="0.5"
+                    android:textColor="@android:color/black"
+                    android:background="@drawable/border_primary_color"
+                    android:gravity="center"
+                    android:text="Slot16" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
