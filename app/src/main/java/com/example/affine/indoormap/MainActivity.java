@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.jjoe64.graphview.GraphView;
+import com.jjoe64.graphview.GridLabelRenderer;
 import com.jjoe64.graphview.series.BaseSeries;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.DataPointInterface;
@@ -23,9 +24,13 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<XYValue> xyValueArray;
+    ArrayList<XYValue> xyValueArray1;
     PointsGraphSeries<DataPoint> xySeries;
     LineGraphSeries<DataPoint> lineSeries;
+    LineGraphSeries<DataPoint> lineSeries1;
     List<Series> seriesList;
+    List<SlotInfo> slotInfoList = new ArrayList<>();
+    String Slot;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -36,8 +41,8 @@ public class MainActivity extends AppCompatActivity {
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScrollableY(true);
-////        graph.getViewport().setScalable(true);
-////        graph.getViewport().setScalableY(true);
+//        graph.getViewport().setScalable(true);
+//        graph.getViewport().setScalableY(true);
 
         //set manual x bounds
         graph.getViewport().setYAxisBoundsManual(true);
@@ -49,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
         graph.getViewport().setMaxX(10);
         graph.getViewport().setMinX(-10);
 
-//        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);// It will remove the background grids
-//        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);// remove horizontal x labels and line
-//        graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
+        graph.getGridLabelRenderer().setGridStyle(GridLabelRenderer.GridStyle.NONE);// It will remove the background grids
+        graph.getGridLabelRenderer().setHorizontalLabelsVisible(false);// remove horizontal x labels and line
+        graph.getGridLabelRenderer().setVerticalLabelsVisible(false);
 
         makeParkingLot(graph,-7.5,-7.5,"Slot1");
         makeParkingLot(graph,-7.5,-2.5,"Slot2");
@@ -69,23 +74,116 @@ public class MainActivity extends AppCompatActivity {
         makeParkingLot(graph,27.5,-2.5,"Slot14");
         makeParkingLot(graph,27.5,2.5,"Slot15");
         makeParkingLot(graph,27.5,7.5,"Slot16");
-        showPath(graph,7.5,2.5,"path");
+        boundaryPath(graph,"boundary");
         seriesList = graph.getSeries();
-        for(int i=0;i<seriesList.size();i++){
-            if(seriesList.get(i).getTitle().equals("Slot7")){
-                xySeries = (PointsGraphSeries<DataPoint>) seriesList.get(i);
-                xySeries.setColor(Color.BLUE);
+        Bundle extras = getIntent().getExtras();
+        if(extras != null && extras.containsKey("Slot"))
+        {
+            Log.e("Message","In if");
+            Slot = extras.getString("Slot");
+            for(int i=0;i<seriesList.size();i++){
+                if(seriesList.get(i).getTitle().equals(Slot)){
+                    for(int j=0;j<slotInfoList.size();j++){
+                        if (slotInfoList.get(j).getSlotNumber().equals(Slot)){
+                            double xp = slotInfoList.get(j).getXp();
+                            double yp = slotInfoList.get(j).getYp();
+                            showPath(graph,xp,yp,"path");
+                        }
+                    }
+                    xySeries = (PointsGraphSeries<DataPoint>) seriesList.get(i);
+                    xySeries.setColor(Color.BLUE);
+                }
+            }
+        }
+        else {
+            Log.e("Message","In else");
+            for(int i=0;i<seriesList.size();i++){
+                if(seriesList.get(i).getTitle().equals("Slot7")){
+                    showPath(graph,7.5,2.5,"path");
+                    xySeries = (PointsGraphSeries<DataPoint>) seriesList.get(i);
+                    xySeries.setColor(Color.BLUE);
+                }
             }
         }
 
     }
 
-    public void showPath(GraphView graph,double xp,double yp,String title){
+    @Override
+    public void onBackPressed() {
+        finish();
+        super.onBackPressed();
+    }
+
+    public void showPath(GraphView graph, double xp, double yp, String title){
         xyValueArray = new ArrayList<>();
         lineSeries = new LineGraphSeries<>();
+        if(xp > 0 && xp <= 10){
         xyValueArray.add(new XYValue(0,-10));
         xyValueArray.add(new XYValue(0,yp));
-        xyValueArray.add(new XYValue(xp,yp));
+        xyValueArray.add(new XYValue(xp,yp));}
+        else if(xp < 0){
+            xyValueArray.add(new XYValue(xp,yp));
+            xyValueArray.add(new XYValue(0,yp));
+            xyValueArray.add(new XYValue(0.01,-10));
+        }
+        else if(xp > 10 && xp <= 20){
+            xyValueArray.add(new XYValue(0,-10));
+            xyValueArray.add(new XYValue(0,12.5));
+            xyValueArray.add(new XYValue(20,12.5));
+            xyValueArray.add(new XYValue(20.01,yp));
+            xyValueArray1 = new ArrayList<>();
+            xyValueArray1.add(new XYValue(xp,yp));
+            xyValueArray1.add(new XYValue(20.01,yp));
+
+        }
+        else if(xp >= 20){
+            xyValueArray.add(new XYValue(0,-10));
+            xyValueArray.add(new XYValue(0,12.5));
+            xyValueArray.add(new XYValue(20,12.5));
+            xyValueArray.add(new XYValue(20.01,yp));
+            xyValueArray.add(new XYValue(xp,yp));
+        }
+        //xyValueArray = sortArray(xyValueArray);
+        for(int i = 0;i <xyValueArray.size(); i++){
+            try{
+                double x = xyValueArray.get(i).getX();
+                double y = xyValueArray.get(i).getY();
+                lineSeries.appendData(new DataPoint(x,y),true, 1000);
+            }catch (IllegalArgumentException e){
+                Log.e(TAG, "createScatterPlot: IllegalArgumentException: " + e.getMessage() );
+            }
+        }
+        if (xp > 10 && xp <= 20){
+            lineSeries1 = new LineGraphSeries<>();
+            for(int i = 0;i <xyValueArray1.size(); i++){
+                try{
+                    double x = xyValueArray1.get(i).getX();
+                    double y = xyValueArray1.get(i).getY();
+                    lineSeries1.appendData(new DataPoint(x,y),true, 1000);
+                }catch (IllegalArgumentException e){
+                    Log.e(TAG, "createScatterPlot: IllegalArgumentException: " + e.getMessage() );
+                }
+            }
+            lineSeries1.setThickness(20);
+            lineSeries1.setTitle(title+"1");
+            lineSeries1.setAnimated(false);
+            lineSeries1.setColor(Color.RED);
+            graph.addSeries(lineSeries1);
+        }
+        lineSeries.setThickness(20);
+        lineSeries.setTitle(title);
+        lineSeries.setAnimated(true);
+        lineSeries.setColor(Color.RED);
+        graph.addSeries(lineSeries);
+    }
+
+    public void boundaryPath(GraphView graph,String title){
+        xyValueArray = new ArrayList<>();
+        lineSeries = new LineGraphSeries<>();
+        xyValueArray.add(new XYValue(-10,-15));
+        xyValueArray.add(new XYValue(-10,15));
+        xyValueArray.add(new XYValue(30,15));
+        xyValueArray.add(new XYValue(30,-15));
         xyValueArray = sortArray(xyValueArray);
         for(int i = 0;i <xyValueArray.size(); i++){
             try{
@@ -96,14 +194,19 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "createScatterPlot: IllegalArgumentException: " + e.getMessage() );
             }
         }
-        lineSeries.setThickness(8);
+        lineSeries.setThickness(1);
         lineSeries.setTitle(title);
-        lineSeries.setAnimated(true);
-        lineSeries.setColor(Color.RED);
+        lineSeries.setAnimated(false);
+        lineSeries.setColor(Color.GRAY);
         graph.addSeries(lineSeries);
     }
 
     public void makeParkingLot(GraphView graph,double xp, double yp,String title){
+        SlotInfo slotInfo = new SlotInfo();
+        slotInfo.setSlotNumber(title);
+        slotInfo.setXp(xp);
+        slotInfo.setYp(yp);
+        slotInfoList.add(slotInfo);
         xyValueArray = new ArrayList<>();
         xySeries = new PointsGraphSeries<>();
         xyValueArray.add(new XYValue(xp,yp));
