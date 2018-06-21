@@ -1,9 +1,11 @@
 package com.example.affine.indoormap;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,12 +34,20 @@ public class MainActivity extends AppCompatActivity {
     List<SlotInfo> slotInfoList = new ArrayList<>();
     String Slot;
     private static final String TAG = "MainActivity";
+    float xstreach = 40f;
+    float ystreach = 60f;
+    float density;
+    float mulfactor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        density = getDensity(this);
+        Log.e("Density","Density is: "+density);
+        mulfactor = (density/3f);
+        Log.e("Mulfactor","Mulfactor is: "+mulfactor);
         GraphView graph = (GraphView) findViewById(R.id.graph);
         graph.getViewport().setScrollable(true);
         graph.getViewport().setScrollableY(true);
@@ -105,8 +115,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
     }
+
 
     @Override
     public void onBackPressed() {
@@ -201,7 +211,7 @@ public class MainActivity extends AppCompatActivity {
         graph.addSeries(lineSeries);
     }
 
-    public void makeParkingLot(GraphView graph,double xp, double yp,String title){
+    public void makeParkingLot(GraphView graph, double xp, double yp, String title){
         SlotInfo slotInfo = new SlotInfo();
         slotInfo.setSlotNumber(title);
         slotInfo.setXp(xp);
@@ -210,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
         xyValueArray = new ArrayList<>();
         xySeries = new PointsGraphSeries<>();
         xyValueArray.add(new XYValue(xp,yp));
-        xyValueArray = sortArray(xyValueArray);
+        //xyValueArray = sortArray(xyValueArray);
         for(int i = 0;i <xyValueArray.size(); i++){
             try{
                 double x = xyValueArray.get(i).getX();
@@ -220,14 +230,20 @@ public class MainActivity extends AppCompatActivity {
                 Log.e(TAG, "createScatterPlot: IllegalArgumentException: " + e.getMessage() );
             }
         }
-        xySeries.setShape(PointsGraphSeries.Shape.RECTANGLE);
+//        xySeries.setShape(PointsGraphSeries.Shape.POINT);
         xySeries.setCustomShape(new PointsGraphSeries.CustomShape() {
             @Override
             public void draw(Canvas canvas, Paint paint, float x, float y, DataPointInterface dataPoint) {
 //                paint.setStrokeWidth(10);
 //                canvas.drawLine(x-20, y-20, x+20, y+20, paint);
 //                canvas.drawLine(x+20, y-20, x-20, y+20, paint);
-                canvas.drawRect(x-120f,y+180f,x+120f,y-180f,paint);
+//                Rect rectangle = new Rect((int)(x-120),(int)(y+180),(int)(x+120),(int)(y-180));
+//                canvas.drawRect(rectangle,paint);
+                float xstreach1 = (float) (xstreach*density);
+                float ystreach1 = (float) (ystreach*density);
+                Log.e("Message","xstreach: "+xstreach1);
+                Log.e("Message","ystreach: "+ystreach1);
+                canvas.drawRect(x-xstreach1,y+ystreach1,x+xstreach1,y-ystreach1,paint);
             }
         });
         xySeries.setColor(Color.GRAY);
@@ -301,5 +317,26 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private static float getDensity(Context context) {
+        float density = context.getResources().getDisplayMetrics().density;
+//        if (density >= 4.0) {
+//            return "xxxhdpi";
+//        }
+//        if (density >= 3.0) {
+//            return "xxhdpi";
+//        }
+//        if (density >= 2.0) {
+//            return "xhdpi";
+//        }
+//        if (density >= 1.5) {
+//            return "hdpi";
+//        }
+//        if (density >= 1.0) {
+//            return "mdpi";
+//        }
+//        return "ldpi";
+        return density;
     }
 }
